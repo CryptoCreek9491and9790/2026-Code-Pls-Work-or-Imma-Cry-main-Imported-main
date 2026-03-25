@@ -175,7 +175,7 @@ public class Vision extends SubsystemBase {
 
     for (var target: result.getTargets()) {
       int id = target.getFiducialId();
-      if (id == 10 || id == 26 || id == 8 || id == 11 || id == 27 || id == 24
+      if (id == 10 || id == 26 || id == 8 || id == 11 || id == 18 || id == 21
       ) {
         double distance = target.getBestCameraToTarget()
         .getTranslation().getNorm();

@@ -25,7 +25,7 @@ public final class Configs {
 
             drivingConfig
                     .idleMode(IdleMode.kBrake)
-                    .smartCurrentLimit(50);
+                    .smartCurrentLimit(30);
             drivingConfig.encoder
                     .positionConversionFactor(drivingFactor) // meters
                     .velocityConversionFactor(drivingFactor / 60.0); // meters per second
@@ -69,14 +69,14 @@ public final class Configs {
                 .inverted(false)
                 .idleMode(IdleMode.kCoast)
                 .openLoopRampRate(.5)
-                .smartCurrentLimit(40);
+                .smartCurrentLimit(30);
 
                 double pivotDegreesPerRotation = 360;
 
                 PIVOT_CONFIG
                 .inverted(false)
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(40);
+                .smartCurrentLimit(30);
                 PIVOT_CONFIG.absoluteEncoder
                 .positionConversionFactor(pivotDegreesPerRotation)
                 .velocityConversionFactor(pivotDegreesPerRotation / 60);
@@ -98,7 +98,7 @@ public final class Configs {
 
                         SHOOTER_CONFIG
                         .inverted(false)
-                        .idleMode(IdleMode.kCoast)
+                        .idleMode(IdleMode.kBrake)
                         .smartCurrentLimit(40);
                         SHOOTER_CONFIG.encoder
                         .velocityConversionFactor(1); //Native RPM
@@ -131,13 +131,13 @@ public final class Configs {
                 .inverted(false)
                 .idleMode(IdleMode.kCoast)
                 .openLoopRampRate(1)
-                .smartCurrentLimit(40);
+                .smartCurrentLimit(20);
 
                 INDEXER_CONFIG
                 .inverted(false)
                 .idleMode(IdleMode.kCoast)
                 .openLoopRampRate(1)
-                .smartCurrentLimit(40);
+                .smartCurrentLimit(20);
         }
         }
 

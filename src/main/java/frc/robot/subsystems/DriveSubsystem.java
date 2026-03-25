@@ -318,7 +318,8 @@ public class DriveSubsystem extends SubsystemBase {
     if (RobotBase.isSimulation()) {
       m_simGyroAngle = 0;
     } else {
-    m_gyro.reset();}
+      m_gyro.reset();
+    }
   }
 
   public void followTrajectory(SwerveSample sample) {

@@ -15,6 +15,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.ShooterSubsystemConstants;
@@ -90,7 +92,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shootCommand(DoubleSupplier distanceMeters) {
-        return this.run(() -> {
+        return new RunCommand(() -> {
             double dist = distanceMeters.getAsDouble();
 
             //Clamp distance to table bouds so it doesnt extrapolate wildly
@@ -125,29 +127,37 @@ public class ShooterSubsystem extends SubsystemBase {
     
     //Fallback Command for when vision is not available
     //Runs both wheels at a fixed flat power
-    public Command shootFixedCommand() {
-        return this.startEnd(
+     public Command shootFixedCommand() {
+         return this.startEnd(
+             () -> {
+                 setShooterRPM(3000);
+                 setBackRollerRPM(5000);
+             }, this::stopAll)
+             .withName("Shoot Fixed");
+     }
+    public Command shootFixedAutoCommand() {
+        return new InstantCommand(
             () -> {
-                setShooterRPM(5500);
-                setBackRollerRPM(4500);
-            }, this::stopAll)
-            .withName("Shoot Fixed");
+                setShooterRPM(3000);
+                setBackRollerRPM(5500);
+            });
     }
 
     public Command stopShotCommand() {
-        return this.run(
+        return new InstantCommand(
             () -> {
                 setShooterRPM(0);
                 setBackRollerRPM(0);
             });       
     }
 
-    public Command reverseShot() {
-        return this.run(
-            () -> {
-                setBackRollerRPM(-600);
-                setShooterRPM(-400);
-            });
-    }
+
+       public Command reverseShot() {
+        return new InstantCommand(() -> {
+            setBackRollerRPM(-600);
+            setShooterRPM(-400);
+           }
+            ,this);
+        }
 }
 

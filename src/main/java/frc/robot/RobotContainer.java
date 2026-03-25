@@ -167,13 +167,18 @@ public class RobotContainer {
             drivetrain));
 
     new JoystickButton(opController, XboxController.Button.kY.value)
-      .toggleOnTrue(intakeSubsystem.runIntakeCommand());
+      .whileTrue(intakeSubsystem.runIntakeCommand());
 
     new JoystickButton(opController, XboxController.Button.kX.value)
-      .toggleOnTrue(hopperSubsystem.rollCommand());
+      .whileTrue(hopperSubsystem.rollCommand())
+      .whileFalse(hopperSubsystem.stopRollerCommand());
 
-    new JoystickButton(opController, XboxController.Button.kB.value)
-      .toggleOnTrue(shooterSubsystem.shootCommand(() -> vision.getHubDistance()));
+    new JoystickButton(opController, XboxController.Button.kRightBumper.value)
+      .whileTrue(shooterSubsystem.shootCommand(() -> vision.getHubDistance()));
+
+    new JoystickButton(opController, XboxController.Button.kLeftBumper.value)
+      .whileTrue(shooterSubsystem.reverseShot())
+      .whileFalse(shooterSubsystem.stopShotCommand());
 
     new JoystickButton(opController, XboxController.Button.kA.value)
       .toggleOnTrue(shooterSubsystem.shootFixedCommand());

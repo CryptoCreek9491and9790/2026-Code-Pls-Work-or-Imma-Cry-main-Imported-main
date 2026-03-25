@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.units.measure.Power;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.IntakeSubsystemConstants;
@@ -80,8 +81,21 @@ public class IntakeSubsystem extends SubsystemBase {
             ,this);
         }
 
+public Command runIntakeandDownCommand() {
+        return new InstantCommand(() -> {
+            setIntakePower(-.5);;
+            setPivotPower(.05);;
+           }
+            ,this);
+        }
+    
 
-
+public Command stopIntakeCommand() {
+    return new InstantCommand(() -> {
+        setIntakePower(0);
+    }
+    ,this);
+}
 
     public Command runUpCommand() {
         return new InstantCommand(() ->{
