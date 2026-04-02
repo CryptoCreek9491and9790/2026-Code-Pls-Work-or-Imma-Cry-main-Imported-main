@@ -15,26 +15,16 @@ import frc.robot.Constants.HopperSubsystemConstants.RollerSetpoints;
 
 public class HopperSubsystem extends SubsystemBase {
     
-    private final SparkMax rollerMotor =
-        new SparkMax(HopperSubsystemConstants.krollerMotorCanId,MotorType.kBrushless);
-
     private final SparkMax indexerMotor =
         new SparkMax(HopperSubsystemConstants.kindexerMotorCandId, MotorType.kBrushless);
     
     
-    public HopperSubsystem() {
-      rollerMotor.configure(Configs.HopperSubsystem.ROLLER_CONFIG,
-      ResetMode.kResetSafeParameters,
-      PersistMode.kPersistParameters);
-      
+    public HopperSubsystem() {      
       indexerMotor.configure(Configs.HopperSubsystem.INDEXER_CONFIG,
       ResetMode.kResetSafeParameters,
       PersistMode.kPersistParameters);
     } 
 
-    private void setRollerPower(double power) {
-        rollerMotor.set(power);
-    }
 
     private void setindexerPower(double power) {
         indexerMotor.set(power);
@@ -43,14 +33,12 @@ public class HopperSubsystem extends SubsystemBase {
     public Command rollCommand() {
         return new InstantCommand(
             () -> {
-                this.setRollerPower(RollerSetpoints.kRoll);
                 this.setindexerPower(IndexerSetpoints.kIndex);
             });
         }
 
 public Command stopRollerCommand() {
         return new InstantCommand(() -> {
-            setRollerPower(0);
             setindexerPower(0);
            }
             ,this);

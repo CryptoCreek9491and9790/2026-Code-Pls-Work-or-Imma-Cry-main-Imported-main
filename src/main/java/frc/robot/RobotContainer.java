@@ -158,7 +158,8 @@ public class RobotContainer {
             drivetrain));
 
     new JoystickButton(opController, XboxController.Button.kY.value)
-      .whileTrue(intakeSubsystem.runIntakeCommand());
+      .whileTrue(intakeSubsystem.runIntakeCommand())
+      .whileFalse(intakeSubsystem.stopIntakeCommand());
 
     new JoystickButton(opController, XboxController.Button.kX.value)
       .whileTrue(hopperSubsystem.rollCommand())

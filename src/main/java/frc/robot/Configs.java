@@ -66,20 +66,22 @@ public final class Configs {
 
         static{
                 INTAKE_CONFIG
-                .inverted(false)
+                .inverted(true)
                 .idleMode(IdleMode.kCoast)
-                .openLoopRampRate(.5)
-                .smartCurrentLimit(30);
+                .smartCurrentLimit(40);
+                INTAKE_CONFIG.encoder
+                .velocityConversionFactor(1); //Native RPM
+                INTAKE_CONFIG.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(.00005, 0, 0)
+                .outputRange(-1, 1)
+                .feedForward.kV(1 / UtilityConstants.kVortexFreeSpeedRps / 60);
 
-                double pivotDegreesPerRotation = 360;
 
                 PIVOT_CONFIG
                 .inverted(false)
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(30);
-                PIVOT_CONFIG.absoluteEncoder
-                .positionConversionFactor(pivotDegreesPerRotation)
-                .velocityConversionFactor(pivotDegreesPerRotation / 60);
                 PIVOT_CONFIG.closedLoop
                 .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
                 //Make sure to tune PID gains- start with a small P value liek .01
@@ -97,7 +99,7 @@ public final class Configs {
 
 
                         SHOOTER_CONFIG
-                        .inverted(false)
+                        .inverted(true)
                         .idleMode(IdleMode.kBrake)
                         .smartCurrentLimit(40);
                         SHOOTER_CONFIG.encoder
@@ -110,7 +112,7 @@ public final class Configs {
 
 
                         BACKROLLER_CONFIG
-                        .inverted(false)
+                        .inverted(true)
                         .idleMode(IdleMode.kCoast)
                         .smartCurrentLimit(40);
                         BACKROLLER_CONFIG.encoder
@@ -127,17 +129,19 @@ public final class Configs {
                 public static final SparkMaxConfig INDEXER_CONFIG = new SparkMaxConfig();
 
         static {
-                ROLLER_CONFIG
+        
+        INDEXER_CONFIG
                 .inverted(false)
-                .idleMode(IdleMode.kCoast)
-                .openLoopRampRate(1)
+                .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20);
+                INDEXER_CONFIG.encoder
+                .velocityConversionFactor(1); //Native RPM
+                INDEXER_CONFIG.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(.00005, 0, 0)
+                .outputRange(-1, 1)
+                .feedForward.kV(12.0 / UtilityConstants.kVortexFreeSpeedRpm);
 
-                INDEXER_CONFIG
-                .inverted(false)
-                .idleMode(IdleMode.kCoast)
-                .openLoopRampRate(1)
-                .smartCurrentLimit(20);
         }
         }
 

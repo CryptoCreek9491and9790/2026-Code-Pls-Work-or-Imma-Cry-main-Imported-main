@@ -13,13 +13,11 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class AlignToTagCommand extends Command {
     //Tag IDs to align to - add or change as needed
-    private static final int[] TARGET_IDS = {10, 26};
+    private static final int[] TARGET_IDS = {10, 26, 18, 21, 11, 8};
 
     //How close you want to stop from the tag(meters)
-    private static final double DESIRED_RANGE_M = .7;
-    private static final double RANGE_DEADBAND_M = .1;
-    private static final double FRONT_LEFT_CAMERA_YAW_OFFSET = 30;
-    private static final double FRONT_RIGHT_CAMERA_YAW_OFFSET = -30;
+    private static final double FRONT_LEFT_CAMERA_YAW_OFFSET = 10;
+    private static final double FRONT_RIGHT_CAMERA_YAW_OFFSET = -10;
         
 
     //PID for yaw correction (turning to face the tag)
@@ -40,13 +38,11 @@ public class AlignToTagCommand extends Command {
         addRequirements(drivetrain);
 
         yawController.setTolerance(5); //Degrees
-        rangeController.setTolerance(RANGE_DEADBAND_M);
     }
 
     @Override
     public void initialize() {
         yawController.reset();
-        rangeController.reset();
     }
 
     @Override
@@ -76,28 +72,7 @@ public class AlignToTagCommand extends Command {
         if (tagPose.isPresent()) {
             Pose2d robotPose = drivetrain.getPose();
 
-            //Vector pointing from robot to tag
-            Translation2d robotToTag = tagPose.get().toPose2d().getTranslation()
-                .minus(robotPose.getTranslation());
-
-            double distance = robotToTag.getNorm();
-            double rangeError = distance - DESIRED_RANGE_M;
-
-            if (Math.abs(rangeError) > RANGE_DEADBAND_M && distance > .01) {
-                //Normalize the direction, scale by PID output
-                Translation2d direction = robotToTag.div(distance);
-                double speed = -rangeController.calculate(distance, DESIRED_RANGE_M);
-                speed = Math.max(-.6, Math.min(.6, speed));
-
-                xSpeed = direction.getX() * speed;
-                ySpeed = direction.getY() * speed;
-                
-            }
-            
-        }
-
-        drivetrain.drive(xSpeed, ySpeed, turn, true);
-    }
+        }    }
 
     @Override
     public void end(boolean interrupted) {
