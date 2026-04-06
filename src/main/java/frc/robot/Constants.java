@@ -47,7 +47,7 @@ public final class Constants {
     }
 
     public static final class IndexerSetpoints{
-      public static final double kIndex = .2;
+      public static final double kIndex = .55;
     }
   }
   public static final class IntakeSubsystemConstants {

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.HopperSubsystemConstants;
 import frc.robot.Constants.HopperSubsystemConstants.IndexerSetpoints;
-import frc.robot.Constants.HopperSubsystemConstants.RollerSetpoints;
 
 public class HopperSubsystem extends SubsystemBase {
     
@@ -37,10 +36,19 @@ public class HopperSubsystem extends SubsystemBase {
             });
         }
 
-public Command stopRollerCommand() {
+    public Command stopRollerCommand() {
+            return new InstantCommand(() -> {
+                setindexerPower(0);
+            }
+                ,this);
+            }
+
+    public Command reverseRollerCommand() {
         return new InstantCommand(() -> {
-            setindexerPower(0);
-           }
-            ,this);
+            setindexerPower(-.4);
         }
+        ,this);
+    }
+
+    
 }

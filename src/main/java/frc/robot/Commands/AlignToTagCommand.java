@@ -5,7 +5,6 @@ import org.photonvision.PhotonCamera;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -23,7 +22,6 @@ public class AlignToTagCommand extends Command {
     //PID for yaw correction (turning to face the tag)
     //Tune kP:increase if turning is too slow, decrease if it oscillates
     private final PIDController yawController = new PIDController(.2, 0, 0);
-    private final PIDController rangeController = new PIDController(.5, 0, .05);
 
     private final DriveSubsystem drivetrain;
     private final PhotonCamera frontRightCamera;
@@ -78,7 +76,6 @@ public class AlignToTagCommand extends Command {
     public void end(boolean interrupted) {
         stop();
         yawController.reset();
-        rangeController.reset();
     }
 
     @Override

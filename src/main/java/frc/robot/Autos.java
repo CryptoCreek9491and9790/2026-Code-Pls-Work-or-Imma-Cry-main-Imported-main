@@ -53,9 +53,9 @@ public class Autos {
                 }, drivetrain),
 
                 // Call trajectory
-                traj1.cmd(),
-                Commands.runOnce(()-> drivetrain.drive(0, 0, 0, true), drivetrain),
-
+                //traj1.cmd(),
+                //Commands.runOnce(()-> drivetrain.drive(0, 0, 0, true), drivetrain),
+                
                 shooter.reverseShot(), Commands.waitSeconds(.5),
 
                 shooter.stopShotCommand(), Commands.waitSeconds(.3),

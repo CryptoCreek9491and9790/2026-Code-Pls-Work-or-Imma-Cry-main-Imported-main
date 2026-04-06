@@ -75,7 +75,7 @@ public final class Configs {
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(.00005, 0, 0)
                 .outputRange(-1, 1)
-                .feedForward.kV(1 / UtilityConstants.kVortexFreeSpeedRps / 60);
+                .feedForward.kV(12.0 / UtilityConstants.kVortexFreeSpeedRpm);
 
 
                 PIVOT_CONFIG
@@ -114,7 +114,7 @@ public final class Configs {
                         BACKROLLER_CONFIG
                         .inverted(true)
                         .idleMode(IdleMode.kCoast)
-                        .smartCurrentLimit(40);
+                        .smartCurrentLimit(50);
                         BACKROLLER_CONFIG.encoder
                         .velocityConversionFactor(1); //Native RPM
                         BACKROLLER_CONFIG.closedLoop
@@ -133,7 +133,7 @@ public final class Configs {
         INDEXER_CONFIG
                 .inverted(false)
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(20);
+                .smartCurrentLimit(40);
                 INDEXER_CONFIG.encoder
                 .velocityConversionFactor(1); //Native RPM
                 INDEXER_CONFIG.closedLoop

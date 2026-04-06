@@ -12,6 +12,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.IntakeSubsystemConstants;
@@ -113,8 +114,8 @@ public Command stopIntakeCommand() {
     }
 
     public Command runIntakeCommand() {
-        return this.run( () ->
-        setIntakeRPM(5000));
+        return new RunCommand(() -> setIntakeRPM(3500), this);
+
     }
     //Reverses the intake roller to eject balls
     //Pivot stays where it is

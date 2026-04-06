@@ -5,12 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Commands.AlignToTagCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Vision;
@@ -134,15 +135,14 @@ public class RobotContainer {
     SmartDashboard.putData("Field", m_field);
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
-
+    // new Trigger(() -> SmartDashboard.getBoolean("AHHHHHHHH",))
+    //   .whileTrue(HopperSubsystem.rollCommand());
+  
     new JoystickButton(driverController, XboxController.Button.kBack.value)
       .onTrue(new InstantCommand(() -> fieldRelative = !fieldRelative));
 
     new JoystickButton(driverController, XboxController.Button.kY.value)
       .onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
-
-      //new JoystickButton(driverController, XboxController.Button.kY.value)
-      //.toggleOnTrue(shooterSubsystem.hoodStowCommand());
 
     new JoystickButton(driverController, XboxController.Button.kLeftBumper.value)
     .onTrue(intakeSubsystem.runUpCommand())
@@ -170,7 +170,9 @@ public class RobotContainer {
 
     new JoystickButton(opController, XboxController.Button.kLeftBumper.value)
       .whileTrue(shooterSubsystem.reverseShot())
-      .whileFalse(shooterSubsystem.stopShotCommand());
+      .whileTrue(hopperSubsystem.reverseRollerCommand())
+      .whileFalse(shooterSubsystem.stopShotCommand())
+      .whileFalse(hopperSubsystem.stopRollerCommand());
 
     new JoystickButton(opController, XboxController.Button.kA.value)
       .toggleOnTrue(shooterSubsystem.shootFixedCommand());
